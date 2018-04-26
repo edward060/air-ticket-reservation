@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Jquery Ajax Test</title>
-    <script src="../static/jquery.min.js">
+    <script src="/static/jquery.min.js">
     </script>
 <script>
 $(document).ready(function(){
@@ -118,59 +118,6 @@ $(document).ready(function(){
 
     });
 
-    $(".btn13").click(function(){
-        var source_ca = $("#source_ca").val();
-        var arrival_ca = $("#arrival_ca").val();
-        var departure_date = $("#departure_date").val();
-        console.log(source_ca);
-//        stuff in the search input
-        $.post("/search_flight", {"source_ca": source_ca, "arrival_ca": arrival_ca, "departure_date" : departure_date}, function(data){
-            console.log(data.type);
-            console.log(Object.keys(data));
-            if(data != "()") {
-                $("#createtable").empty();
-                var table = $("<table border='1' cellspacing='0'> </table>");
-                table.appendTo($("#createtable"));
-
-                var trh = $("<tr></tr>");
-                trh.appendTo(table);
-
-
-                for (var h = 0; h < data.split('[]')[0].split(',').length; h++) {
-                    var th1 = $("<th>" + data.split('[]')[0].split(',')[h].split(':')[0].split("\"")[1] + "</th>");
-                    th1.appendTo(trh);
-                }
-
-
-                for (var k = 0; k < data.split('[]').length - 1; k++) {
-                    var trh2 = $("<tr></tr>");
-                    trh2.appendTo(table);
-                    for (var h = 0; h < data.split('[]')[k].split(',').length; h++) {
-                        var th2 = $("<th>" + data.split('[]')[k].split(',')[h].split(': ')[1] + "</th>");
-                        th2.appendTo(trh2);
-                    }
-                }
-            }
-
-        });
-    });
-
-    $(".btn14").click(function(){
-        var airline_item = $("#airline").val();
-        $.post("/insert_airline", {"insert_airline": airline_item}, function(data){
-            alert(data);
-        });
-    });
-//
-//    $(".btn11").click(function(){
-//        var firstname = $("#firstname").val();
-//        var lastname = $("#lastname").val();
-//
-//        $.post("/name", {"firstname": firstname, 'lastname': lastname}, function(data, status){
-//            alert("name: " + data.name + "  age:" + data.age);
-//        });
-//    });
-
 });
 
   function CreateTable(rowCount,cellCount)
@@ -218,11 +165,10 @@ $(document).ready(function(){
     <button class="btn10">load</button><br/><br/>
     <div>getJson: </div><br/>
     <button class="btn8">getJson</button><br/><br/>
-    <button class="btn9">post</button>
+        <button class="btn9">post</button>
 
 
-
-    <form action="/myform" method='post'>
+<form action="/myform" method='post'>
 First name: <input type="text" name="FirstName" value="Mickey" id="firstname"><br>
 Last name: <input type="text" name="LastName" value="Mouse" id="lastname"><br>
 <input type="submit" value="提交">
@@ -231,23 +177,8 @@ Last name: <input type="text" name="LastName" value="Mouse" id="lastname"><br>
 <button class="btn11">send name to flask</button>
 <button class="btn12">从后端获取数据动态生成表格</button>
 <br/><br/>
-<!---->
-Search Flights: <br>
-Source city/airport name: <input type="text" name="Source_ca" value="" id="source_ca"><br>
-Arrival city/airport name: <input type="text" name="Arrival_ca" value="" id="arrival_ca"><br>
-Departure Date: <input type="text" name="Departure_date" value="" id="departure_date"><br>
-<!--Search: <input type="text" name="Search" value="" id="search"><br>-->
-
-<button class="btn13">search</button><br/><br/>
-<!---->
 <input type="button" value="添加表格" onClick="CreateTable(5,6)" >
 <br/><br/>
 <div id="createtable"></div>
-
-Insert Airline: <input type="text" name="airline" value="" id="airline"><br>
-<button class="btn14">insert</button><br/><br/>
-
-
-
 </body>
 </html>
